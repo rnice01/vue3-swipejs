@@ -1,0 +1,28 @@
+@import "./utils";
+
+body {
+  background: #18191a;
+  color: #eee;
+}
+
+.active {
+  border: 3px solid green;
+}
+
+.App {
+  background-color: "black";
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.arrow-left {
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+
+.arrow-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+}

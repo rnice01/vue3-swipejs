@@ -1,0 +1,7 @@
+$heights: 8;
+
+@for $i from 1 through $heights {
+    .mh-#{$i}00 {
+        min-height: #{$i * 100}px;
+    }
+}
