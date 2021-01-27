@@ -3,18 +3,21 @@
       <div className="gallery__slider mh-500">
         <div id="slider" class="swipe">
           <div class="swipe-wrap">
-            <div v-for="(image, i) in allImages" :key="'gallery-swiper-' + i"><img :src="image.src"/></div>
+            <div v-for="(image, i) in state.sources" :key="'gallery-swiper-' + i"><img :src="image.src"/></div>
           </div>
         </div>
+        <button
+          class="slider__arrow-right"
+          type="button"
+          @click="() => arrowClicked(1)"
+        >Right</button>
+        <button
+          class="slider__arrow-left"
+          type="button"
+          @click="() => arrowClicked(-1)"
+        >Left</button>
       </div>
-      <div class="gallery__thumbnails">
-        <div v-for="(image, i) in allImages" :key="'gallery-thumb-' + i" >
-          <img
-          :class="state.currentIndex === i ? 'active': ''"
-          :src="image.src"
-          @click="() => thumbnailClicked(i)" />
-        </div>
-      </div>
+      <BottomThumbnails :thumbs="state.sources" :currentIndex="state.currentIndex" @thumbnailClicked="thumbnailClicked" />
     </div>
 </template>
 
@@ -22,9 +25,11 @@
 import Swipe from 'swipejs'
 import { defineComponent, onMounted, ref, reactive } from 'vue'
 import { SliderSrc } from '../@types/types'
+import BottomThumbnails from './BottomThumbnails.vue'
 
 type GalleryState = {
   currentIndex: number;
+  sources: SliderSrc[];
 }
 
 export default defineComponent({
@@ -43,7 +48,8 @@ export default defineComponent({
   setup (props) {
     const sliderRef = ref<Swipe>()
     const state = reactive<GalleryState>({
-      currentIndex: 0
+      currentIndex: 0,
+      sources: props.images || []
     })
     onMounted(() => {
       const sliderEl = document.getElementById('slider') as HTMLElement
@@ -65,14 +71,36 @@ export default defineComponent({
         })
       }
     })
-    const thumbnailClicked = (index: number) => {
-      console.log(index)
+    const slideTo = (index: number) => {
+      if (sliderRef.value) {
+        state.currentIndex = index
+        sliderRef.value.slide(index, 500)
+      }
     }
+    const thumbnailClicked = (index: number) => {
+      slideTo(index)
+    }
+
+    const arrowClicked = (value: number) => {
+      const indexTo = value + state.currentIndex
+      if (indexTo > state.sources.length - 1) {
+        slideTo(0)
+      } else if (indexTo < 0) {
+        slideTo(state.sources.length - 1)
+      } else {
+        slideTo(indexTo)
+      }
+    }
+
     return {
       allImages: props.images,
+      arrowClicked,
       thumbnailClicked,
       state
     }
+  },
+  components: {
+    BottomThumbnails
   }
 })
 </script>
@@ -94,13 +122,21 @@ export default defineComponent({
     position: relative;
   }
 
+  @mixin slider-arrow {
+    top: 50%;
+    position: absolute;
+  }
+
   .gallery {
-    &__thumbnails {
-      display: flex;
-      justify-content: space-between;
-      & > div > img {
-        height: 150px;
-        width: 150px;
+    &__slider {
+      position:relative;
+      .slider__arrow-left {
+        @include slider-arrow;
+        left: 0;
+      }
+      .slider__arrow-right {
+        @include slider-arrow;
+        right: 0;
       }
     }
   }

@@ -24,10 +24,18 @@ export default defineComponent({
   name: 'App',
   setup () {
     const imageSrcs = [
-      'https://place-hold.it/100',
-      'https://place-hold.it/200',
-      'https://place-hold.it/300',
-      'https://place-hold.it/400'
+      'https://place-hold.it/400/black',
+      'https://place-hold.it/400/green',
+      'https://place-hold.it/400/red',
+      'https://place-hold.it/400/grey',
+      'https://place-hold.it/400/yellow',
+      'https://place-hold.it/400/black',
+      'https://place-hold.it/400/green',
+      'https://place-hold.it/400/red',
+      'https://place-hold.it/400/pink',
+      'https://place-hold.it/400/yellow',
+      'https://place-hold.it/400/black',
+      'https://place-hold.it/400/green'
     ]
 
     const images = imageSrcs.map((src): SliderSrc => {
