@@ -32,20 +32,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped lang="scss">
-  .gallery__thumbnails {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    & > div {
-      width: 75%;
-      display: flex;
-      justify-content: space-evenly;
-      & > div > img {
-        height: 50px;
-        width: 50px;
-      }
-    }
-  }
-</style>

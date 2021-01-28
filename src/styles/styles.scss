@@ -9,20 +9,49 @@ body {
   border: 3px solid green;
 }
 
-.App {
-  background-color: "black";
-  font-family: sans-serif;
-  text-align: center;
+@mixin slider-arrow {
+  top: 50%;
+  position: absolute;
 }
 
-.arrow-left {
-  position: absolute;
-  top: 50%;
-  left: 0;
-}
-
-.arrow-right {
-  position: absolute;
-  top: 50%;
-  right: 0;
+.gallery {
+  &__slider {
+    position:relative;
+    .slider-wrap {
+      overflow: hidden;
+      visibility: hidden;
+      position: relative;
+      .slider__slide {
+        overflow: hidden;
+        position: relative;
+        & > div {
+          float: left;
+          width: 100%;
+          position: relative;
+        }
+      }
+    }
+    .slider__arrow-left {
+      @include slider-arrow;
+      left: 0;
+    }
+    .slider__arrow-right {
+      @include slider-arrow;
+      right: 0;
+    }
+  }
+  .gallery__thumbnails {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    & > div {
+      width: 75%;
+      display: flex;
+      justify-content: space-evenly;
+      & > div > img {
+        height: 50px;
+        width: 50px;
+      }
+    }
+  }
 }

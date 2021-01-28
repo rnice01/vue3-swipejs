@@ -1,24 +1,24 @@
 <template>
   <div className="gallery">
-      <div className="gallery__slider mh-500">
-        <div id="slider" class="swipe">
-          <div class="swipe-wrap">
-            <div v-for="(image, i) in state.sources" :key="'gallery-swiper-' + i"><img :src="image.src"/></div>
-          </div>
+    <div className="gallery__slider mh-500">
+      <div id="slider" class="slider-wrap">
+        <div class="slider__slide">
+          <div v-for="(image, i) in state.sources" :key="'gallery-slide-' + i"><img :src="image.src"/></div>
         </div>
-        <button
-          class="slider__arrow-right"
-          type="button"
-          @click="() => arrowClicked(1)"
-        >Right</button>
-        <button
-          class="slider__arrow-left"
-          type="button"
-          @click="() => arrowClicked(-1)"
-        >Left</button>
       </div>
-      <BottomThumbnails :thumbs="state.sources" :currentIndex="state.currentIndex" @thumbnailClicked="thumbnailClicked" />
+      <button
+        class="slider__arrow-right"
+        type="button"
+        @click="() => arrowClicked(1)"
+      >Right</button>
+      <button
+        class="slider__arrow-left"
+        type="button"
+        @click="() => arrowClicked(-1)"
+      >Left</button>
     </div>
+    <BottomThumbnails :thumbs="state.sources" :currentIndex="state.currentIndex" @thumbnailClicked="thumbnailClicked" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -104,40 +104,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-  .swipe {
-    overflow: hidden;
-    visibility: hidden;
-    position: relative;
-  }
-  .swipe-wrap {
-    overflow: hidden;
-    position: relative;
-  }
-  .swipe-wrap > div {
-    float: left;
-    width: 100%;
-    position: relative;
-  }
-
-  @mixin slider-arrow {
-    top: 50%;
-    position: absolute;
-  }
-
-  .gallery {
-    &__slider {
-      position:relative;
-      .slider__arrow-left {
-        @include slider-arrow;
-        left: 0;
-      }
-      .slider__arrow-right {
-        @include slider-arrow;
-        right: 0;
-      }
-    }
-  }
-</style>
